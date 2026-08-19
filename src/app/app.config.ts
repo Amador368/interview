@@ -10,12 +10,13 @@ import { RolesEffects } from './roles/store/roles.effects';
 import { DateFormat } from './interfaces/date-format.interface';
 import { DateFormatService } from './date-format.service';
 import { UsDateFormatService } from './us-date-format.service';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore({ roles: rolesReducer }),
     provideEffects([RolesEffects]),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),    
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), provideAnimationsAsync(),    
   ]
 };
