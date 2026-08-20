@@ -15,6 +15,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { usersReducer } from './users/store/users.reducer';
 import { UsersEffects } from './users/store/users.effects';
 import { erpAppInterceptor } from './interceptors/app.interceptor';
+import { AppEffects } from './store/app.effects';
+import { appReducer } from './store/app.reducers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,8 +24,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([erpAppInterceptor])
     ),
-    provideStore({ roles: rolesReducer, users: usersReducer }),
-    provideEffects([RolesEffects, UsersEffects]),
+    provideStore({ roles: rolesReducer, users: usersReducer, app: appReducer }),
+    provideEffects([RolesEffects, UsersEffects, AppEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), provideAnimationsAsync(),    
   ]
 };

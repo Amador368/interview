@@ -5,5 +5,10 @@
   <a routerLink="/users" routerLinkActive="active" class="app-nav__link">Usuarios</a>
   <span class="app-nav__date">{{ today }}</span>
 </nav>
-
-<router-outlet />
+@if((loading$ | async)) {
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+} @else {
+  <router-outlet></router-outlet>
+} 

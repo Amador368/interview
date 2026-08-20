@@ -36,9 +36,9 @@ export class UserService {
   }
 
   getUser(): Observable<User> {
-    return this.http.get<UserResponse>(this.apiUrl).pipe(
+    return this.http.get<User>(this.apiUrl).pipe(
       map((response) => {
-        return response.users[0]; // Assuming the API returns a single user in the 'users' array
+        return response;
       })
     );
   }
