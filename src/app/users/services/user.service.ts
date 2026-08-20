@@ -60,11 +60,11 @@ export class UserService {
     );
   }
 
-  deleteUser(id: string): Observable<User> {
+  deleteUser(id: number): Observable<User> {
     const url = `${this.apiUrlAll}/${id}`;
-    return this.http.delete<UserResponse>(url).pipe(
+    return this.http.delete<User>(url).pipe(
       map((response) => {
-        return response.users[0]; // Assuming the API returns an array of deleted users
+        return response;
       })
     );
   }

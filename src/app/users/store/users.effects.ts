@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import * as UsersActions from './users.actions';
 
@@ -88,8 +89,26 @@ export class UsersEffects {
             }
             })
         )
-    ); 
+    );
 
-    constructor(private actions$: Actions, private userService: UserService) {}
+    deleteUserSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(UsersActions.deleteUserSuccess),
+            tap(() => {
+                this.snackBar.open('Usuario eliminado exitosamente', 'Cerrar', {
+                    duration: 3000,
+                    horizontalPosition: 'center',
+                    verticalPosition: 'bottom'
+                });
+            })
+        ),
+        { dispatch: false }
+    );
+
+    constructor(
+        private actions$: Actions, 
+        private userService: UserService,
+        private snackBar: MatSnackBar
+    ) {}
 }
 
