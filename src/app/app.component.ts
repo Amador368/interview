@@ -22,10 +22,12 @@ export class AppComponent implements OnInit {
   today: string;
 
   user$: Observable<User | null>;
-    loading$: Observable<boolean>;
+  loading$: Observable<boolean>;
 
   constructor(private dateFormatService: DateFormatService, private store: Store) {
+    
     this.today = this.dateFormatService.today();
+
     this.user$ = this.store.select(selectUser);
     this.loading$ = this.store.select(selectLoading);
   }
