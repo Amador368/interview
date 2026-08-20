@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -7,6 +7,8 @@ import { RolesListComponent } from './components/roles-list/roles-list.component
 import { RoleFormComponent } from './components/role-form/role-form.component';
 import * as RolesActions from './store/roles.actions';
 import { selectAllRoles, selectRolesLoading } from './store/roles.selectors';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-roles',
@@ -32,6 +34,7 @@ import { selectAllRoles, selectRolesLoading } from './store/roles.selectors';
   `
 })
 export class RolesComponent implements OnInit {
+    readonly dialog = inject(MatDialog);
   roles$: Observable<Role[]>;
   loading$: Observable<boolean>;
   editingRole: Role | null = null;
@@ -59,7 +62,18 @@ export class RolesComponent implements OnInit {
   }
 
   onDelete(id: string): void {
-    this.store.dispatch(RolesActions.deleteRole({ id }));
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Confirmación',
+        message: `¿Estás seguro de que deseas eliminar el rol?`
+      },
+      width: '250px'
+    });
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.store.dispatch(RolesActions.deleteRole({ id }));
+      }
+    });
   }
 
   onCancelEdit(): void {

@@ -8,7 +8,7 @@ import {
   MatDialog,
 } from '@angular/material/dialog';
 import { UsersDialogComponent } from '../user-dialog/user-dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog';
+import { ConfirmationDialogComponent } from '../../../shared/confirmation-dialog/confirmation-dialog';
 import { Store } from '@ngrx/store';
 import * as UsersActions from '../../store/users.actions';
 
@@ -38,6 +38,10 @@ export class UserListComponent {
 
   deleteUser(user: User) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Confirmación',
+        message: `¿Estás seguro de que deseas eliminar al usuario ${user.firstName} ${user.lastName}?`
+      },
       width: '250px'
     });
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {

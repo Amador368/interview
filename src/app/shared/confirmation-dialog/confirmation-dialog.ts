@@ -1,13 +1,13 @@
-import { Component, inject } from "@angular/core";
+import { Component, Inject, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
-import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from "@angular/material/dialog";
 
 
 @Component({
   selector: 'dialog-animations-example-dialog',
-  template: `<h2 mat-dialog-title>Eliminar usuario</h2>
+  template: `<h2 mat-dialog-title>{{ data.title }}</h2>
 <mat-dialog-content>
-  ¿Desea eliminar al usuario?
+  {{ data.message }}
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close (click)="onCancel()" >No</button>
@@ -18,6 +18,8 @@ import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDi
 })
 export class ConfirmationDialogComponent {
   readonly dialogRef = inject(MatDialogRef<ConfirmationDialogComponent>);
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {title: string, message: string}) {}
+  
   onConfirm(): void {
     this.dialogRef.close(true);
   }
