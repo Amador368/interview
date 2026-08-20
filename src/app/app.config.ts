@@ -12,13 +12,15 @@ import { DateFormat } from './interfaces/date-format.interface';
 import { DateFormatService } from './date-format.service';
 import { UsDateFormatService } from './us-date-format.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { usersReducer } from './users/store/users.reducer';
+import { UsersEffects } from './users/store/users.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(),
-    provideStore({ roles: rolesReducer }),
-    provideEffects([RolesEffects]),
+    provideStore({ roles: rolesReducer, users: usersReducer }),
+    provideEffects([RolesEffects, UsersEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), provideAnimationsAsync(),    
   ]
 };
