@@ -29,10 +29,6 @@ import { selectAllRoles, selectRolesLoading } from './store/roles.selectors';
         (delete)="onDelete($event)"
       ></app-roles-list>
     </div>
-  `,
-  styles: `
-    .roles-page { max-width: 900px; margin: 2rem auto; padding: 0 1rem; font-family: sans-serif; }
-    h2 { color: #3f51b5; margin-bottom: 1.5rem; }
   `
 })
 export class RolesComponent implements OnInit {
