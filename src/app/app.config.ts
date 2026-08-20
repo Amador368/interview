@@ -1,6 +1,6 @@
 import { ApplicationConfig, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
@@ -14,11 +14,14 @@ import { UsDateFormatService } from './us-date-format.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { usersReducer } from './users/store/users.reducer';
 import { UsersEffects } from './users/store/users.effects';
+import { erpAppInterceptor } from './interceptors/app.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([erpAppInterceptor])
+    ),
     provideStore({ roles: rolesReducer, users: usersReducer }),
     provideEffects([RolesEffects, UsersEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), provideAnimationsAsync(),    
