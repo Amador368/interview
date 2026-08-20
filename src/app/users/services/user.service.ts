@@ -18,18 +18,18 @@ export class UserService {
 
 
   getUsers(): Observable<User[]> {
-    return this.http.get<UserResponse[]>(this.apiUrlAll).pipe(
+    return this.http.get<UserResponse>(this.apiUrlAll).pipe(
       map((response) => {
-        return response.map((userResponse) => {
-          const user: User = {
-            id: userResponse.id,
-            firstName: userResponse.firstName,
-            lastName: userResponse.lastName,
-            email: userResponse.email,
-            phone: userResponse.phone,
-            role: userResponse.role
+        return response.users.map((user: User) => {
+          const userItem: User = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phone: user.phone,
+            role: user.role
           };
-          return user;
+          return userItem;
         });
       })
     );
@@ -38,76 +38,38 @@ export class UserService {
   getUser(): Observable<User> {
     return this.http.get<UserResponse>(this.apiUrl).pipe(
       map((response) => {
-        const user: User = {
-          id: response.id,
-          firstName: response.firstName,
-          lastName: response.lastName,
-          email: response.email,
-          phone: response.phone,
-          role: response.role
-        };
-        return user;
+        return response.users[0]; // Assuming the API returns a single user in the 'users' array
       })
     );
   }
 
-  addUser(user: User): Observable<User[]> {
-    return this.http.post<UserResponse[]>(this.apiUrlAll, user).pipe(
+  addUser(user: User): Observable<User> {
+    return this.http.post<UserResponse>(this.apiUrlAll, user).pipe(
       map((response) => {
-        return response.map((userResponse) => {
-          const user: User = {
-            id: userResponse.id,
-            firstName: userResponse.firstName,
-            lastName: userResponse.lastName,
-            email: userResponse.email,
-            phone: userResponse.phone,
-            role: userResponse.role
-          };
-          return user;
-        });
+          return response.users[0];
       })
     );
   }
 
-  updateUser(user: User): Observable<User[]> {
+  updateUser(user: User): Observable<User> {
     const url = `${this.apiUrlAll}/${user.id}`;
-    return this.http.put<UserResponse[]>(url, user).pipe(
+    return this.http.put<UserResponse>(url, user).pipe(
       map((response) => {
-        return response.map((userResponse) => {
-          const updatedUser: User = {
-            id: userResponse.id,
-            firstName: userResponse.firstName,
-            lastName: userResponse.lastName,
-            email: userResponse.email,
-            phone: userResponse.phone,
-            role: userResponse.role
-          };
-          return updatedUser;
-        });
+         return response.users[0];
       })
     );
   }
 
-  deleteUser(id: string): Observable<User[]> {
+  deleteUser(id: string): Observable<User> {
     const url = `${this.apiUrlAll}/${id}`;
-    return this.http.delete<UserResponse[]>(url).pipe(
+    return this.http.delete<UserResponse>(url).pipe(
       map((response) => {
-        return response.map((userResponse) => {
-          const deletedUser: User = {
-            id: userResponse.id,
-            firstName: userResponse.firstName,
-            lastName: userResponse.lastName,
-            email: userResponse.email,
-            phone: userResponse.phone,
-            role: userResponse.role
-          };
-          return deletedUser;
-        });
+        return response.users[0]; // Assuming the API returns an array of deleted users
       })
     );
   }
 
-  
+
 
 
 

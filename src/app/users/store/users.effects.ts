@@ -13,11 +13,13 @@ export class UsersEffects {
             ofType(UsersActions.getUsers),
             switchMap(() => {
             try {
+                  
                 return this.userService.getUsers().pipe(
                 map((users) => UsersActions.getUsersSuccess({ users })),
                 catchError((error) => of(UsersActions.getUsersFailure({ error })))
                 );
-            } catch (error) {
+              
+            } catch (error) {                
                 return of(UsersActions.getUsersFailure({ error: 'Error al cargar usuarios' }));
             }
             })

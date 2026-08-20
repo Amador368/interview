@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {AsyncPipe} from '@angular/common';
 import { User } from './models/user.model';
 import { UserService } from './services/user.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { selectAllUsers, selectUsersLoading } from './store/users.selectors';
 import * as usersActions from './store/users.actions';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [],
+  imports: [UserListComponent, AsyncPipe, MatProgressSpinnerModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
@@ -24,6 +27,7 @@ export class UsersComponent implements OnInit {
   }
   ngOnInit() {
     this.store.dispatch(usersActions.getUsers());
+    
     // this.userService.getUser().subscribe((user: User) => {
     //   console.log('User data:', user);
     // });

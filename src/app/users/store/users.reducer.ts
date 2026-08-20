@@ -22,14 +22,14 @@ export const usersReducer = createReducer(
   on(UsersActions.getUsersFailure, (state, { error }) => ({ ...state, error, loading: false })),
 
   on(UsersActions.addUser, state => ({ ...state, loading: true })),
-  on(UsersActions.addUserSuccess, (state, { user }) => ({ ...state, users: user, loading: false })),
+  on(UsersActions.addUserSuccess, (state, { user }) => ({ ...state, users: [...state.users, user], loading: false })),
   on(UsersActions.addUserFailure, (state, { error }) => ({ ...state, error, loading: false })),
 
   on(UsersActions.updateUser, state => ({ ...state, loading: true })),
-  on(UsersActions.updateUserSuccess, (state, { user }) => ({ ...state, users: user, loading: false })),
+  on(UsersActions.updateUserSuccess, (state, { user }) => ({ ...state, users: state.users.map(u => u.id === user.id ? user : u), loading: false })),
   on(UsersActions.updateUserFailure, (state, { error }) => ({ ...state, error, loading: false })),
 
   on(UsersActions.deleteUser, state => ({ ...state, loading: true })),
-  on(UsersActions.deleteUserSuccess, (state, { user }) => ({ ...state, users: user, loading: false })),
+  on(UsersActions.deleteUserSuccess, (state, { user }) => ({ ...state, users: state.users.filter(u => u.id !== user.id), loading: false })),
   on(UsersActions.deleteUserFailure, (state, { error }) => ({ ...state, error, loading: false })),
 );
