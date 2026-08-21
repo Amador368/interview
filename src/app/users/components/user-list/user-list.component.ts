@@ -28,12 +28,16 @@ export class UserListComponent {
   openAddUserDialog() {
      this.dialog.open(UsersDialogComponent, {
 
-      width: '250px'
+      width: '350px'
     });
   }
 
   editUser(user: User) {
-    console.log('Edit user:', user);
+    const dialogRef = this.dialog.open(UsersDialogComponent, {
+      width: '350px'
+    });
+    dialogRef.componentInstance.isEditMode = true;
+    dialogRef.componentInstance.userForm.patchValue(user);
   }
 
   deleteUser(user: User) {

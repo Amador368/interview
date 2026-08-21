@@ -10,15 +10,13 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class UserService {
 
-  private apiUrl = 'https://dummyjson.com/users/1'; 
-  private apiUrlAll = 'https://dummyjson.com/users';
-  //todo refactor url to enviroment variable or config file
+  private apiUrl = 'https://dummyjson.com/users';
 
   constructor(private http: HttpClient) { }
 
 
   getUsers(): Observable<User[]> {
-    return this.http.get<UserResponse>(this.apiUrlAll).pipe(
+    return this.http.get<UserResponse>(this.apiUrl).pipe(
       map((response) => {
         return response.users.map((user: User) => {
           const userItem: User = {
@@ -36,7 +34,7 @@ export class UserService {
   }
 
   getUser(): Observable<User> {
-    return this.http.get<User>(this.apiUrl).pipe(
+    return this.http.get<User>(`${this.apiUrl}/1`).pipe(
       map((response) => {
         return response;
       })
@@ -44,24 +42,24 @@ export class UserService {
   }
 
   addUser(user: User): Observable<User> {
-    return this.http.post<UserResponse>(this.apiUrlAll, user).pipe(
+    return this.http.post<User>(`${this.apiUrl}/add`, user).pipe(
       map((response) => {
-          return response.users[0];
+          return response;
       })
     );
   }
 
   updateUser(user: User): Observable<User> {
-    const url = `${this.apiUrlAll}/${user.id}`;
-    return this.http.put<UserResponse>(url, user).pipe(
+    const url = `${this.apiUrl}/${user.id}`;
+    return this.http.put<User>(url, user).pipe(
       map((response) => {
-         return response.users[0];
+         return response;
       })
     );
   }
 
   deleteUser(id: number): Observable<User> {
-    const url = `${this.apiUrlAll}/${id}`;
+    const url = `${this.apiUrl}/${id}`;
     return this.http.delete<User>(url).pipe(
       map((response) => {
         return response;
