@@ -2,9 +2,13 @@
 <nav class="app-nav">
   <span class="app-nav__brand">&#9679; MyApp</span>
   <a routerLink="/roles" routerLinkActive="active" class="app-nav__link">Roles</a>
-  <a routerLink="/usuarios" routerLinkActive="active" class="app-nav__link app-nav__link--soon"
-     [attr.title]="'Próximamente'">Usuarios</a>
+  <a routerLink="/users" routerLinkActive="active" class="app-nav__link">Usuarios</a>
   <span class="app-nav__date">{{ today }}</span>
 </nav>
-
-<router-outlet />
+@if((loading$ | async)) {
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+} @else {
+  <router-outlet></router-outlet>
+} 

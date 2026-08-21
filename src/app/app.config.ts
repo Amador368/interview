@@ -1,5 +1,6 @@
 import { ApplicationConfig, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
@@ -10,12 +11,21 @@ import { RolesEffects } from './roles/store/roles.effects';
 import { DateFormat } from './interfaces/date-format.interface';
 import { DateFormatService } from './date-format.service';
 import { UsDateFormatService } from './us-date-format.service';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { usersReducer } from './users/store/users.reducer';
+import { UsersEffects } from './users/store/users.effects';
+import { erpAppInterceptor } from './interceptors/app.interceptor';
+import { AppEffects } from './store/app.effects';
+import { appReducer } from './store/app.reducers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideStore({ roles: rolesReducer }),
-    provideEffects([RolesEffects]),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),    
+    provideHttpClient(
+      withInterceptors([erpAppInterceptor])
+    ),
+    provideStore({ roles: rolesReducer, users: usersReducer, app: appReducer }),
+    provideEffects([RolesEffects, UsersEffects, AppEffects]),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), provideAnimationsAsync(),    
   ]
 };

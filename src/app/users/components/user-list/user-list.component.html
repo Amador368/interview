@@ -1,0 +1,57 @@
+<div class="add-user-button">
+      <button mat-flat-button (click)="openAddUserDialog()">
+        <mat-icon>add</mat-icon>
+        Agregar usuario
+    </button>
+</div>
+
+<table mat-table [dataSource]="users" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="firstName">
+    <th mat-header-cell *matHeaderCellDef> First Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef> Last Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+    <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef> Phone </th>
+    <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="role">
+    <th mat-header-cell *matHeaderCellDef> Role </th>
+    <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+  </ng-container>
+
+  <ng-component matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" (click)="editUser(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteUser(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="openEditUserPage(element)">
+        <mat-icon>edit_document</mat-icon>
+      </button>
+    </td>
+  </ng-component>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true "></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

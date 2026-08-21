@@ -7,11 +7,17 @@ import { DateFormat } from './interfaces/date-format.interface';
 export class DateFormatService extends DateFormat {
 
   /** Returns today's date formatted as YYYY-MM-DD */
-  today(): string {
+  /*today(): string {
     const d = new Date();
     const yyyy = d.getFullYear();
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const dd = String(d.getDate()).padStart(2, '0');
     return `${yyyy}-${mm}-${dd}`;
+  }*/
+
+  today(): string {
+    const date = new Date();
+    const dateFormatted = new Intl.DateTimeFormat('en-CA').format(date);
+    return dateFormatted;
   }
 }

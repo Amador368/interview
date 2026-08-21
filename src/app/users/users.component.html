@@ -1,0 +1,13 @@
+<div class="users-page">
+    <h2>Gestión de Usuarios</h2>
+    @if((loading$ | async)) {
+        <div class="loading-container">
+            <mat-spinner></mat-spinner>
+        </div>
+
+    } @else {
+        <div class="user-list-container">
+            <app-user-list [users]="(users$ | async) || []"></app-user-list>
+        </div>
+    }
+</div>
