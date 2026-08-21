@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import { User } from '../../models/user.model';
-import { ɵEmptyOutletComponent } from "@angular/router";
+import { Router, ɵEmptyOutletComponent } from "@angular/router";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -22,6 +22,7 @@ import * as UsersActions from '../../store/users.actions';
 export class UserListComponent {
   readonly dialog = inject(MatDialog);
   readonly store = inject(Store);
+  readonly router = inject(Router);
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'phone', 'role', 'actions'];
   @Input() users: User[] = [];
 
@@ -53,5 +54,8 @@ export class UserListComponent {
         this.store.dispatch(UsersActions.deleteUser({ id: user.id }));
       }
     });
+  }
+  openEditUserPage(user: User) {
+    this.router.navigate(['/users/edit', user.id], { state: { user } });
   }
 }

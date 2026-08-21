@@ -107,12 +107,12 @@ export class UsersDialogComponent {
     }
   }
 
-  private createUser(user: User): void {
+   createUser(user: User): void {
     this.store.dispatch(UsersActions.addUser({ user }));
     this.dialogRef.close();
   }
 
-  private updateUser(user: User): void {
+   updateUser(user: User): void {
     this.store.dispatch(UsersActions.updateUser({ user }));
     this.dialogRef.close();
   }
